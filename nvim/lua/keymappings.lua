@@ -1,6 +1,0 @@
-vim.keymap.set('n', ';t', ":terminal<CR>")
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
-vim.keymap.set('n', '<C-n>', ":CHADopen<CR>")
-vim.keymap.set('n', '<C-c><C-g>', ":CMakeGenerate<CR>")
-vim.keymap.set('n', '<C-c><C-b>', ":CMakeBuild<CR>")
-vim.keymap.set('n', '<Esc>', ":noh<CR>")
