@@ -7,5 +7,7 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.laststatus = 2
 vim.cmd "colorscheme onedark"
+vim.opt.background = "dark"
+-- vim.cmd("colorscheme oxocarbon")
 
 require("keymappings")

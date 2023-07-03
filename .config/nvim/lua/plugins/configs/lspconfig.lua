@@ -26,57 +26,10 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
 end
 
-local coq = require "coq"
-require'lspconfig'.clangd.setup(coq.lsp_ensure_capabilities({ default_config = { 
-        capabilities = capabilities; 
-        cmd = { "clangd", "--background-index", "--pch-storage=memory", "--clang-tidy", "--suggest-missing-includes", "--cross-file-rename" }, 
-        filetypes = {"c", "cpp", "tpp", "h", "hpp", "objc", "objcpp"}, 
-        init_options = { clangdFileStatus = true, usePlaceholders = true, completeUnimported = true, semanticHighlighting = true }, 
-        root_dir = require'lspconfig'.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git", "CMakeLists.txt") }, 
-        on_attach = on_attach 
-}))
-require'lspconfig'.rust_analyzer.setup(coq.lsp_ensure_capabilities({
-  on_attach = on_attach,
-  settings = {
-    ["rust-analyzer"] = {
-      assist = {
-        importMergeBehavior = "last",
-        importPrefix = "by_self",
-      },
-      diagnostics = {
-        disabled = { "unresolved-import" }
-      },
-      cargo = {
-          loadOutDirsFromCheck = true
-      },
-      procMacro = {
-          enable = true
-      },
-      checkOnSave = {
-          command = "clippy"
-      },
-    }
-  }})) 
-
-local pid = vim.fn.getpid()
-local omnisharp_bin = "/usr/bin/omnisharp"
-require'lspconfig'.omnisharp.setup(coq.lsp_ensure_capabilities({
-    on_attach = on_attach,
-    cmd = { "mono", omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
-}))
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
---[[ local servers = { 'pyright', 'rust_analyzer', 'clangd' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
-end ]]
+require('plugins.configs.langservers').init(on_attach)

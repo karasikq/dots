@@ -1,6 +1,5 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use 'cdelledonne/vim-cmake'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'neovim/nvim-lspconfig'
   use 'airblade/vim-gitgutter'
@@ -26,5 +25,8 @@ require('packer').startup(function(use)
   use 'stevearc/aerial.nvim'
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } } 
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable "make" == 1 }
+  -- Language tools
+  use 'simrat39/rust-tools.nvim'
+  use 'cdelledonne/vim-cmake'
 end)
 
