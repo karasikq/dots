@@ -9,6 +9,5 @@ vim.o.laststatus = 2
 vim.cmd "colorscheme onedark"
 vim.opt.background = "dark"
 vim.opt.updatetime = 1000
--- vim.cmd("colorscheme oxocarbon")
 
 require("keymappings")
