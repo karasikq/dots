@@ -5,7 +5,7 @@
   "chadtree": { "branch": "chad", "commit": "f205444ad5666c5fe47f5d6248351a9fe7af574b" },
   "coq.artifacts": { "branch": "artifacts", "commit": "469c27eb84a91fe2721b6c0af57703ffa1e785e9" },
   "coq_nvim": { "branch": "coq", "commit": "d4a58fa7ab20c928f88e416b3fcf6ada965bf314" },
-  "lazy.nvim": { "branch": "main", "commit": "16603c6917435d8446f7357cb61095138a417085" },
+  "lazy.nvim": { "branch": "main", "commit": "ad30030b6abca7dac5a493c58b4d183b3fe93202" },
   "lightspeed.nvim": { "branch": "main", "commit": "299eefa6a9e2d881f1194587c573dad619fdb96f" },
   "lsp_signature.nvim": { "branch": "master", "commit": "33250c84c7a552daf28ac607d9d9e82f88cd0907" },
   "lspsaga.nvim": { "branch": "main", "commit": "85f7c38d96924fd3c457ea0a31667cc1bd06b5e0" },
