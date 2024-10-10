@@ -21,6 +21,16 @@ install() {
     echo "Installed."
 }
 
+confirm_removal() {
+    read -p "Are you sure you want to remove rm -rf $1? (y/n): " confirm
+    if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+        rm -rf "$1"
+        echo "Removed: $1"
+    else
+        echo "Skipped removal of: $1"
+    fi
+}
+
 if [ -d "$ZSH_DIR" ] || [ -d "$NVIM_DIR" ]; then
     if [ -d "$ZSH_DIR" ]; then
         echo "zsh config already exists"
@@ -33,6 +43,8 @@ if [ -d "$ZSH_DIR" ] || [ -d "$NVIM_DIR" ]; then
 
     case $choice in
         1)
+	    [ -d "$ZSH_DIR" ] && confirm_removal "$ZSH_DIR"
+            [ -d "$NVIM_DIR" ] && confirm_removal "$NVIM_DIR"
             install
             ;;
         2)
