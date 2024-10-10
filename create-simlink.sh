@@ -7,5 +7,11 @@ if [ -f "$ZSHRC" ]; then
     echo "Backup of .zshrc created at ${ZSHRC}.backup."
 fi
 
-ln -s -T "$NEW_ZSHRC" "$ZSHRC"
-echo "Symbolic link created: $NEW_ZSHRC -> $ZSHRC"
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    ln -s -T "$NEW_ZSHRC" "$ZSHRC"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    ln -s "$NEW_ZSHRC" "$ZSHRC"
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi
