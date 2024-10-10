@@ -6,6 +6,7 @@ export ZSH_COMPDUMP=$ZSH_CACHE/.zcompdump-$HOST
 source "$ZSH_CONFIG/.prompt.zsh"
 source "$ZSH_CONFIG/.fzf.zsh"
 source "$ZSH_CONFIG/.android.zsh"
+source "$ZSH_CONFIG/.path.zsh"
 
 HISTSIZE=1000
 HISTFILE=$ZSH_CACHE/.zsh_history

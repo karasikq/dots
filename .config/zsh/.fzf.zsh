@@ -1,3 +1,8 @@
+export FZF_ALT_C_OPTS="
+  -i
+  --walker-skip .git,node_modules,target,.idea,.vscode,.cargo
+  --preview 'tree -C {}'"
+
 if [ -f /opt/homebrew/opt/fzf/bin ]; then
   if [[ ! "$PATH" == */opt/homebrew/opt/fzf/bin* ]]; then
     PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
