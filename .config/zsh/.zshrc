@@ -7,6 +7,7 @@ source "$ZSH_CONFIG/.prompt.zsh"
 source "$ZSH_CONFIG/.fzf.zsh"
 source "$ZSH_CONFIG/.android.zsh"
 source "$ZSH_CONFIG/.path.zsh"
+source "$ZSH_CONFIG/.alias.zsh"
 
 HISTSIZE=1000
 HISTFILE=$ZSH_CACHE/.zsh_history
