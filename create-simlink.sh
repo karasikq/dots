@@ -3,7 +3,9 @@ ZSHRC="$HOME/.zshrc"
 NEW_ZSHRC="$HOME/.config/zsh/.zshrc"
 
 if [ -f "$ZSHRC" ]; then
-    mv "$ZSHRC" "${ZSHRC}.backup"
+    original_file=$(readlink -f "$ZSHRC")
+    cp "$original_file" "${ZSHRC}.backup"
+    rm "$ZSHRC"
     echo "Backup of .zshrc created at ${ZSHRC}.backup."
 fi
 

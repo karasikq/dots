@@ -1,8 +1,5 @@
 export ZSH_CONFIG="$HOME/.config/zsh"
-export ZSH_CACHE="$HOME/.cache/zsh/"
-export EDITOR="nvim"
-export ZSH_COMPDUMP=$ZSH_CACHE/.zcompdump-$HOST
-
+source "$ZSH_CONFIG/.env.zsh"
 source "$ZSH_CONFIG/.prompt.zsh"
 source "$ZSH_CONFIG/.fzf.zsh"
 source "$ZSH_CONFIG/.android.zsh"
@@ -16,7 +13,8 @@ HISTDUP=erase
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 
-autoload -U compinit && compinit
+autoload -Uz compinit
+compinit -d "$ZSH_COMPDUMP"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 source $ZSH_CONFIG/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
