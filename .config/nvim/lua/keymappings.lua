@@ -96,11 +96,15 @@ M.setup = function()
   -- Bonus: Open and jump (if needed)
   keymap('n', '<leader>so', '<cmd>AerialOpen<CR>', { desc = '[S]ymbol [O]pen' })
   keymap('n', '<leader>sj', '<cmd>AerialGo<CR>', { desc = '[S]ymbol [J]ump to location' })
+
+  local git = require('git')
+  keymap('n', '<leader>gb', git.blame, { desc = 'Show [G]it [B]lame for current line' })
+  keymap('n', '<leader>gd', git.show_line_diff, { desc = 'Show [G]it [D]iff for current line change' })
+
 end
 
 ----- LSP Keymaps (on_attach) -----
 M.on_lsp_attach = function(client, bufnr)
-  print("lsp attached")
   -- Enable completion
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
