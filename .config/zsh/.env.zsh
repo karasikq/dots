@@ -11,6 +11,8 @@ export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode"
 export NSS_DEFAULT_DB_DIR="$XDG_DATA_HOME/pki/nssdb"
 export GNUPGHOME="$HOME/.config/gnupg"
 export GPG_TTY=$(tty)
+export CARGO_HOME="$HOME/.bundles/cargo"
+export RUSTUP_HOME="$HOME/.bundles/rustup"
 
 if (( $+commands[nvim] )); then
   export EDITOR=nvim

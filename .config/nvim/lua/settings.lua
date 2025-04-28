@@ -10,4 +10,4 @@ vim.cmd "colorscheme onedark"
 vim.opt.background = "dark"
 vim.opt.updatetime = 1000
 
-require("keymappings")
+require("keymappings").setup()

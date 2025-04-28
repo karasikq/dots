@@ -16,3 +16,5 @@ require "core.lazy"
 
 require "plugins"
 require "settings"
+require("statusline").setup()
+require "start_page"

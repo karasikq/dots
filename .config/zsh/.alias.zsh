@@ -34,3 +34,25 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 alias untar='tar -xzvf'
+
+function addpath() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: addpath /path/to/add" >&2
+    return 1
+  fi
+
+  local path_to_add="$1"
+  local path_file="$ZSH_CONFIG/.path.zsh"
+
+  if [[ ":$PATH:" == *":$path_to_add:"* ]]; then
+    echo "Path already exists in \$PATH: $path_to_add" >&2
+    return 2
+  fi
+
+  local path_line="[ -d \"$path_to_add\" ] && export PATH=\"\$PATH:$path_to_add\""
+
+  echo $path_line >> "$path_file"
+  echo "Added to $path_file: $path_line"
+
+  source "$path_file"
+}
