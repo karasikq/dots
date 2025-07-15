@@ -1,0 +1,17 @@
+require('lazy').setup({
+  'folke/which-key.nvim',
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable "make" == 1 },
+  'neovim/nvim-lspconfig',
+  'nvim-tree/nvim-web-devicons',
+  'navarasu/onedark.nvim',
+  'nvim-lua/plenary.nvim',
+  'stevearc/aerial.nvim',
+  'numToStr/Comment.nvim',
+  'windwp/nvim-autopairs',
+  'ggandor/leap.nvim',
+  'mrcjkb/rustaceanvim',
+  'echasnovski/mini.files',
+  'echasnovski/mini.completion',
+})

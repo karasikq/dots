@@ -36,8 +36,9 @@ local signature_cache = {
   parameters = {},
 }
 
-local function update_signature()
-  local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+local function update_signature(bufnr)
+  bufnr = bufnr or 0
+  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
   if #clients == 0 then
     signature_cache.active = false
     signature_cache.label = ''
@@ -45,11 +46,11 @@ local function update_signature()
   end
 
   local params = vim.lsp.util.make_position_params()
-  vim.lsp.buf_request(0, 'textDocument/signatureHelp', params, function(err, result, ctx)
+  vim.lsp.buf_request(bufnr, 'textDocument/signatureHelp', params, function(err, result, ctx)
     if err or not result or not result.signatures or #result.signatures == 0 then
       signature_cache.active = false
       signature_cache.label = ''
-      M.update_statusline()
+      M.update_statusline(bufnr)
       return
     end
 
@@ -58,7 +59,7 @@ local function update_signature()
       signature_cache.active = true
       signature_cache.label = signature.label
       signature_cache.parameters = signature.parameters or {}
-      M.update_statusline()
+      M.update_statusline(bufnr)
     end
   end)
 end
@@ -140,42 +141,51 @@ local components = {
   end,
 }
 
-function M.update_statusline()
+function M.update_statusline(bufnr)
+  bufnr = bufnr or 0
+
   local left = table.concat({
     components.mode(),
     components.git(),
     components.diagnostics(),
     components.signature(),
   })
-  
+
   local right = table.concat({
     components.filepath(),
     components.percent(),
     components.lines(),
   })
-  
-  vim.opt.statusline = left .. '%=' .. right
+
+  local statusline = left .. '%=' .. right
+  vim.api.nvim_buf_set_option(bufnr, 'statusline', statusline)
 end
 
 function M.setup()
   local group = vim.api.nvim_create_augroup('CustomStatusline', { clear = true })
-  
+
   vim.api.nvim_create_autocmd({ 'ModeChanged', 'BufEnter', 'CursorMoved', 'CursorMovedI' }, {
     group = group,
-    callback = function()
-      
-      update_signature()
-      M.update_statusline()
+    callback = function(args)
+      local bufnr = args.buf
+      update_signature(bufnr)
+      M.update_statusline(bufnr)
     end,
   })
 
   vim.api.nvim_create_autocmd('User', {
     pattern = 'GitSignsUpdate',
     group = group,
-    callback = M.update_statusline,
+    callback = function(args)
+      M.update_statusline(args.buf)
+    end,
   })
 
-  M.update_statusline()
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(bufnr) then
+      M.update_statusline(bufnr)
+    end
+  end
 end
 
 return M
