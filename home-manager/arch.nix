@@ -10,6 +10,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    
     initContent = builtins.readFile ./../configs/zsh/.zshrc;
   };
 

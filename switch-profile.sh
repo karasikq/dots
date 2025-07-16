@@ -19,7 +19,7 @@ if [ $# -eq 0 ]; then
     done
     echo ""
     echo "Usage: $0 [profile-name]"
-    echo "Example: $0 arch-gaming"
+    echo "Example: $0 arch"
     exit 1
 fi
 
@@ -37,7 +37,11 @@ echo "Switching to profile: $PROFILE"
 echo "User: $USERNAME"
 echo ""
 
-nix run home-manager/master -- switch --flake .#$USERNAME@$PROFILE
+if [ "$PROFILE" = "macos" ]; then
+    darwin-rebuild switch --flake .#cbate-mac
+else
+    nix run home-manager/master -- switch --flake .#$USERNAME@$PROFILE
+fi
 
 echo ""
 echo "Profile '$PROFILE' applied successfully!"

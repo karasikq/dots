@@ -7,6 +7,7 @@
     MANPAGER = "less -R";
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
+
     NIX_DOTS_CONFIG = "$HOME/.config/nix";
   };
 
@@ -16,8 +17,6 @@
 
   # Shared packages for both Arch and macOS
   home.packages = with pkgs; [
-    # Core utilities
-    zsh
     ffmpeg
     git
     ripgrep
@@ -33,20 +32,37 @@
     rsync
     ncdu
     sd
-
-    lazygit
   ];
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    initContent = builtins.readFile ./../configs/zsh/.zshrc;
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "karasikq";
+    userEmail = "romastepanuik@gmail.com";
+    extraConfig = {
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
+    };
+  };
+
+  programs.firefox.enable = true;
 
   home.file = {
     ".zshrc".source = ./../configs/zsh/.zshrc;
     ".config/zsh".source = ./../configs/zsh;
     ".config/nvim/init.lua".source = ./../configs/nvim/init.lua;
     ".config/nvim/lua".source = ./../configs/nvim/lua;
-  };
-
-  home.activation = {
-    createZshCache = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      $DRY_RUN_CMD mkdir -p $VERBOSE_ARG $HOME/.cache/zsh
-    '';
   };
 }

@@ -3,13 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    darwin.url = "github:nix-darwin/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = { self, nixpkgs, darwin, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -29,18 +31,19 @@
             }
           ];
         };
+      };
 
-        # macOS configuration
-        "cbate@macos" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+      # Add system-level nix-darwin configuration for macOS
+      darwinConfigurations = {
+        "cbate-mac" = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
           modules = [
-            ./home-manager/macos.nix
+            ./darwin.nix
+            home-manager.darwinModules.home-manager
             {
-              home = {
-                username = "cbate";
-                homeDirectory = "/Users/cbate";
-                stateVersion = "23.11";
-              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.cbate = import ./home-manager/macos.nix;
             }
           ];
         };
